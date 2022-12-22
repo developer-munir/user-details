@@ -1,7 +1,10 @@
 .main-container {
   max-width: 1200px;
-  margin: 0 auto !important;
+  margin: 10px auto !important;
 }
 .container-item {
-  border: 1px solid;
+  border-right: 1px solid rgb(247, 247, 247);
+  border-bottom: 1px solid rgb(247, 247, 247);
+  box-shadow: 1px 1px 1px rgb(179, 172, 172);
+  border-radius: 5px;
 }

@@ -6,7 +6,7 @@ import "./main.css";
 const Main = () => {
   return (
     <Grid container className="main-container">
-      <Grid item xs={12} sm={7} className="container-item">
+      <Grid item xs={12} sm={7}>
         <UserList></UserList>
       </Grid>
       <Grid item xs={12} sm={5} className="container-item">
