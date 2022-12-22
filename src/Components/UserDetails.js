@@ -49,7 +49,7 @@ const UserDetails = ({ singleUserDetails }) => {
                     type="text"
                     name=""
                     id=""
-                    placeholder={fullName ? fullName : ""}
+                    placeholder={profile ? fullName : ""}
                     readOnly
                     className="input-style"
                   />

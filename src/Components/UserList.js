@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import ALlUsers from "./AllUsers";
 
-const UserList = ({ seeDetails, isLoading, setIsLoading }) => {
+const UserList = ({ seeDetails }) => {
   return (
     <div className="container-UserList">
       <Box
@@ -15,11 +15,7 @@ const UserList = ({ seeDetails, isLoading, setIsLoading }) => {
       >
         <h1>User List</h1>
       </Box>
-      <ALlUsers
-        seeDetails={seeDetails}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-      ></ALlUsers>
+      <ALlUsers seeDetails={seeDetails}></ALlUsers>
     </div>
   );
 };

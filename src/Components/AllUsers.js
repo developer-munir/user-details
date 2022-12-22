@@ -88,10 +88,11 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function ALlUsers({ seeDetails, isLoading, setIsLoading }) {
+export default function ALlUsers({ seeDetails }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     axios
@@ -100,7 +101,7 @@ export default function ALlUsers({ seeDetails, isLoading, setIsLoading }) {
         setRows(data?.data);
         setIsLoading(false);
       });
-  }, [isLoading]);
+  }, []);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -125,7 +126,7 @@ export default function ALlUsers({ seeDetails, isLoading, setIsLoading }) {
           ).map((row) => (
             <TableRow key={row?.id}>
               {isLoading ? (
-                <Spinner></Spinner>
+                <span>Loading</span>
               ) : (
                 <>
                   <TableCell>
