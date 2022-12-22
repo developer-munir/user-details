@@ -18,6 +18,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import { Avatar, Stack } from "@mui/material";
 import axios from "axios";
 import UserSpinner from "./UserSpinner";
+import ErrorMsg from "./ErrorMsg";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -93,6 +94,7 @@ export default function ALlUsers({ seeDetails, color }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState("");
 
   React.useEffect(() => {
     axios
@@ -100,6 +102,10 @@ export default function ALlUsers({ seeDetails, color }) {
       .then((data) => {
         setRows(data?.data);
         setIsLoading(false);
+      })
+      .catch(function (error) {
+        setError(error);
+        console.log(error);
       });
   }, []);
 
@@ -118,63 +124,77 @@ export default function ALlUsers({ seeDetails, color }) {
 
   return (
     <TableContainer component={Paper}>
-      {isLoading ? (
-        <UserSpinner></UserSpinner>
+      {error ? (
+        <ErrorMsg></ErrorMsg>
       ) : (
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-          <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <TableRow key={row?.id}>
-                <TableCell>
-                  <Stack>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/1.jpg"
-                    />
-                  </Stack>
-                </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  onClick={() => seeDetails(row)}
-                  sx={{ cursor: "pointer", color: { color } }}
-                  className="font-text"
-                >
-                  {`${row?.profile?.firstName} ${row?.profile?.lastName}`}
-                </TableCell>
-              </TableRow>
-            ))}
+        <>
+          {isLoading ? (
+            <UserSpinner></UserSpinner>
+          ) : (
+            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+              <TableBody>
+                {(rowsPerPage > 0
+                  ? rows.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : rows
+                ).map((row) => (
+                  <TableRow key={row?.id}>
+                    <TableCell>
+                      <Stack>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src="/static/images/avatar/1.jpg"
+                        />
+                      </Stack>
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      onClick={() => seeDetails(row)}
+                      sx={{ cursor: "pointer", color: { color } }}
+                      className="font-text"
+                    >
+                      {`${row?.profile?.firstName} ${row?.profile?.lastName}`}
+                    </TableCell>
+                  </TableRow>
+                ))}
 
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[
+                      5,
+                      10,
+                      25,
+                      { label: "All", value: -1 },
+                    ]}
+                    colSpan={3}
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        "aria-label": "rows per page",
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          )}
+        </>
       )}
     </TableContainer>
   );
