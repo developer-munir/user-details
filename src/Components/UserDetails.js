@@ -20,7 +20,7 @@ const UserDetails = ({ singleUserDetails }) => {
       </Box>
       {singleUserDetails ? (
         <div>
-          <Box sx={{ textAlign: "center", paddingTop: "5px" }}>
+          <Box sx={{ textAlign: "center", paddingTop: "10px" }}>
             <Stack>
               <Avatar
                 alt="Remy Sharp"
